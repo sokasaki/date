@@ -464,13 +464,13 @@ const CreatorFlow = {
         <div class="web-corner top-left" style="width:30px; height:30px; background-size: contain;"></div>
         <div class="web-corner top-right" style="width:30px; height:30px;"></div>
         
-        <div class="card-badge" style="font-size:0.6rem; top:12px; right:15px;">${theme === "bully" ? "Pizza Time 🍕" : "Earth-1610"}</div>
+        <div class="card-badge" style="font-size:0.6rem; top:12px; right:15px;">${theme === "bully" ? `<i class="fa-solid fa-pizza-slice" aria-hidden="true"></i> Pizza Time` : `<i class="fa-solid fa-earth-americas" aria-hidden="true"></i> Earth-1610`}</div>
         
         <div class="card-header" style="margin-bottom: 12px; gap:8px;">
           ${
             theme === "bully"
               ? `
-            <span style="font-size: 1.25rem;">🍕</span>
+            <i class="fa-solid fa-pizza-slice" style="font-size: 1.25rem;" aria-hidden="true"></i>
           `
               : `
             <svg viewBox="0 0 100 100" width="22" height="22">
@@ -654,12 +654,13 @@ const ProposalReceiver = {
     }
     // Dimension custom naming
     if (this.data.th === "bully") {
-      document.getElementById("theme-badge").innerText = `Pizza Time 🍕`;
+      document.getElementById("theme-badge").innerHTML =
+        `<i class="fa-solid fa-pizza-slice" aria-hidden="true"></i> Pizza Time`;
       document.getElementById("display-dimension").innerText = `69`;
 
       const symbolContainer = document.querySelector(".spider-symbol-small");
       if (symbolContainer) {
-        symbolContainer.innerHTML = `<span style="font-size: 2.2rem; animation: logo-float 4s ease-in-out infinite; display: inline-block; filter: drop-shadow(0 0 8px var(--spider-accent));">🍕</span>`;
+        symbolContainer.innerHTML = `<i class="fa-solid fa-pizza-slice" aria-hidden="true" style="font-size: 2.2rem; animation: logo-float 4s ease-in-out infinite; display: inline-block; filter: drop-shadow(0 0 8px var(--spider-accent));"></i>`;
       }
     } else {
       const dimId = Math.floor(Math.random() * 800) + 100;
@@ -874,11 +875,11 @@ const ProposalReceiver = {
     // Apply Emo Maguire funny stamps
     const stamp = document.querySelector(".canon-stamp");
     if (this.data.th === "bully") {
-      stamp.innerText = "PIZZA TIME! 🍕";
+      stamp.innerHTML = `<i class="fa-solid fa-pizza-slice" aria-hidden="true"></i> PIZZA TIME!`;
       document.getElementById("success-prompt-text").innerText =
         "Double lock! Emo dance stabilized. See you there!";
     } else {
-      stamp.innerText = "CANON EVENT LOCKED 🔒";
+      stamp.innerHTML = `<i class="fa-solid fa-lock" aria-hidden="true"></i> CANON EVENT LOCKED`;
       document.getElementById("success-prompt-text").innerText =
         "A ticket has been registered in the arachnid database. See you in the theater!";
     }
@@ -1009,7 +1010,7 @@ SEQUENCE:0
 DTSTAMP:${formatICSDate(new Date())}
 DTSTART:${startDateString}
 DTEND:${endDateString}
-SUMMARY:Spider-Man Movie Date with ${this.data.s}! 🕷️🎟️
+SUMMARY:Spider-Man Movie Date with ${this.data.s}
 DESCRIPTION:Confirmed canon event to watch "${movie}"! Message: "${this.data.m}"
 LOCATION:${location}
 END:VEVENT
