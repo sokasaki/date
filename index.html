@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spider-Man: Brand New Day — Date Invitation</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="creator-mode">
+
+  <!-- Canvas for Interactive Spider-Web / Multiverse Particles -->
+  <canvas id="web-canvas"></canvas>
+  <!-- BACKGROUND MUSIC / SFX BUTTON -->
+  <div class="audio-control-panel">
+    <button id="sfx-toggle" title="Toggle Sound FX"><i class="fas fa-volume-up"></i></button>
+  </div>
+  <!-- ================================================================= -->
+  <!-- 1. CREATOR DASHBOARD VIEW (Visible when designing the invitation) -->
+  <!-- ================================================================= -->
+  <div id="creator-dashboard" class="dashboard-container">
+    <header class="dashboard-header">
+      <div class="logo-area">
+        <svg class="spider-logo" viewBox="0 0 100 100" width="50" height="50">
+          <path
+            d="M50,15 L45,35 L35,30 L42,45 L30,48 L45,55 L25,65 L44,63 L30,85 L48,70 L50,88 L52,70 L70,85 L56,63 L75,65 L55,55 L70,48 L58,45 L65,30 L55,35 Z"
+            fill="#ff1e27" />
+          <circle cx="50" cy="42" r="6" fill="#000" />
+          <path d="M50,10 L50,90 M10,50 L90,50 M20,20 L80,80 M20,80 L80,20" stroke="rgba(255, 30, 39, 0.2)"
+            stroke-width="2" />
+        </svg>
+        <h1>Spider-Man: <span class="accent-text">Brand New Day</span></h1>
+      </div>
+      <p class="subtitle">A brand new day. A brand new date. Create your cinematic invitation below ✦</p>
+    </header>
+    <div class="dashboard-grid">
+      <!-- Left: Form Panel -->
+      <section class="form-card glass-panel">
+        <h2 class="section-title"><i class="fa-solid fa-sliders"></i> Customize Proposal</h2>
+        <form id="proposal-form" onsubmit="event.preventDefault();">
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="crush-name">Recipient's Name (Crush)</label>
+              <input type="text" id="crush-name" placeholder="e.g. Gwen" value="Gwen" required autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="sender-name">Your Name</label>
+              <input type="text" id="sender-name" placeholder="e.g. Miles" value="Miles" required autocomplete="off">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="movie-title">Movie Title</label>
+            <input type="text" id="movie-title" placeholder="e.g. Spider-Man: Brand New Day"
+              value="Spider-Man: Brand New Day" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="invite-message">Message</label>
+            <textarea id="invite-message" rows="3" placeholder="Write a customized message..."
+              required>Will you swing into the cinema with me to watch the new Spider-Man movie?</textarea>
+          </div>
+          <div class="form-group" style="margin-top: 15px;">
+            <label>Who picks the Date & Location?</label>
+            <div style="display: flex; gap: 15px; margin-top: 5px;">
+              <label style="font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                <input type="radio" name="decision-mode" value="creator" checked
+                  onchange="document.getElementById('creator-date-inputs').style.display='block'"> I'll decide
+              </label>
+              <label style="font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                <input type="radio" name="decision-mode" value="receiver"
+                  onchange="document.getElementById('creator-date-inputs').style.display='none'"> Let them choose
+              </label>
+            </div>
+          </div>
+          <div id="creator-date-inputs">
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="date-val">Date</label>
+                <input type="date" id="date-val">
+              </div>
+              <div class="form-group">
+                <label for="time-val">Time</label>
+                <input type="time" id="time-val">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="location-val">Location / Theater</label>
+              <input type="text" id="location-val" placeholder="e.g. IMAX Theater" value="IMAX Theater 3D"
+                autocomplete="off">
+            </div>
+          </div>
+          <!-- Theme Choices -->
+          <div class="form-group">
+            <label>Multiverse Dimension Theme</label>
+            <div class="theme-selector-grid">
+              <label class="theme-card active" data-theme="spiderverse">
+                <input type="radio" name="theme" value="spiderverse" checked>
+                <div class="theme-preview sv-preview"></div>
+                <span>Spider-Verse (Glitch)</span>
+              </label>
+              <label class="theme-card" data-theme="classic">
+                <input type="radio" name="theme" value="classic">
+                <div class="theme-preview classic-preview"></div>
+                <span>Classic Hero (Comic)</span>
+              </label>
+              <label class="theme-card" data-theme="stealth">
+                <input type="radio" name="theme" value="stealth">
+                <div class="theme-preview stealth-preview"></div>
+                <span>Stealth Mode (Gold)</span>
+              </label>
+              <label class="theme-card" data-theme="bully">
+                <input type="radio" name="theme" value="bully">
+                <div class="theme-preview bully-preview"></div>
+                <span>Bully Maguire (Meme)</span>
+              </label>
+            </div>
+          </div>
+          <!-- No Button Behavior -->
+          <div class="form-group">
+            <label>If They Hover/Click "NO":</label>
+            <div class="no-behavior-grid">
+              <label class="behavior-card active" data-behavior="dodge">
+                <input type="radio" name="no-behavior" value="dodge" checked>
+                <i class="fa-solid fa-arrows-spin"></i>
+                <span>Dodge Cursor</span>
+              </label>
+              <label class="behavior-card" data-behavior="canon">
+                <input type="radio" name="no-behavior" value="canon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Canon Event Glitch</span>
+              </label>
+              <label class="behavior-card" data-behavior="websnap">
+                <input type="radio" name="no-behavior" value="websnap">
+                <i class="fa-solid fa-spider"></i>
+                <span>Web Pull to YES</span>
+              </label>
+            </div>
+          </div>
+          <!-- Optional Telegram Notification -->
+          <div class="form-group"
+            style="margin-top: 25px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1);">
+            <label style="color: var(--spider-accent-secondary);"><i class="fa-brands fa-telegram"></i> Telegram
+              Notifications (Optional)</label>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 15px;">Get a message instantly
+              when they click YES!</p>
+            <div class="form-group-row">
+              <div>
+                <input type="text" id="tg-token" placeholder="Bot Token (e.g. 12345:ABC...)">
+              </div>
+              <div>
+                <input type="text" id="tg-chat-id" placeholder="Your Chat ID">
+              </div>
+            </div>
+          </div>
+          <button type="button" id="btn-generate" class="glow-btn neon-red">
+            <span class="btn-text"><i class="fa-solid fa-circle-nodes"></i> Assemble Dimension Portal</span>
+          </button>
+        </form>
+      </section>
+      <!-- Right: Live Preview Panel -->
+      <section class="preview-card">
+        <h2 class="section-title"><i class="fa-solid fa-eye"></i> Live Multiverse Preview</h2>
+
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen-container">
+            <!-- Simulated Proposal Screen inside the device frame -->
+            <div id="preview-viewport" class="preview-viewport theme-spiderverse">
+              <!-- Live Preview Content will render here via JS -->
+              <div class="preview-portal-state">
+                <div class="preview-portal-spinner"></div>
+                <p class="preview-portal-text">Earth-1610 Portal Detected</p>
+                <button type="button" class="preview-portal-btn">Access Transmission</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="preview-tip">
+          <p><i class="fa-solid fa-lightbulb"></i> Customizing inputs updates the live viewport instantly. Test the
+            animations!</p>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- ================================================================= -->
+  <!-- 2. PORTAL MODAL (Appears after clicking Generate)                  -->
+  <!-- ================================================================= -->
+  <div id="portal-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-panel glow-border">
+      <button class="close-modal" id="btn-close-modal">&times;</button>
+
+      <div class="modal-portal-graphic">
+        <div class="portal-core"></div>
+        <div class="portal-ring ring1"></div>
+        <div class="portal-ring ring2"></div>
+      </div>
+      <h2 class="modal-title">Portal Established!</h2>
+      <p class="modal-description">Your encrypted invitation key is synthesized. Share this link with your crush to open
+        the wormhole.</p>
+      <div class="link-share-box">
+        <input type="text" id="generated-link" readonly value="https://date-verse.spiderman.io/?portal=...">
+        <button id="btn-copy-link" class="glow-btn neon-cyan" title="Copy Link">
+          <span class="btn-text"><i class="fa-regular fa-copy"></i> Copy</span>
+        </button>
+      </div>
+      <div class="modal-actions-row">
+        <a href="#" id="btn-test-link" target="_blank" class="glow-btn neon-red text-center">
+          <span><i class="fa-solid fa-arrow-up-right-from-square"></i> Test Portal (Live)</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- ================================================================= -->
+  <!-- 3. ACTUAL PROPOSAL SCREEN (Loaded via portal URL code parameter) -->
+  <!-- ================================================================= -->
+  <main id="proposal-screen" class="proposal-container hidden">
+
+    <!-- Portal Landing Phase -->
+    <div id="portal-landing" class="portal-landing-state simple-landing">
+      <!-- Cute bouncing mascot -->
+      <div class="cute-mascot" style="margin-bottom: 20px;">
+        <svg viewBox="0 0 120 120" width="110" height="110" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="72" rx="28" ry="30" fill="#e8f4f8"/>
+          <circle cx="60" cy="44" r="26" fill="#f5e6d3"/>
+          <circle cx="38" cy="24" r="10" fill="#f5e6d3"/>
+          <circle cx="82" cy="24" r="10" fill="#f5e6d3"/>
+          <circle cx="38" cy="24" r="6" fill="#f9b8c0"/>
+          <circle cx="82" cy="24" r="6" fill="#f9b8c0"/>
+          <circle cx="52" cy="44" r="5" fill="#2c2c2c"/>
+          <circle cx="68" cy="44" r="5" fill="#2c2c2c"/>
+          <circle cx="54" cy="42" r="1.5" fill="#fff"/>
+          <circle cx="70" cy="42" r="1.5" fill="#fff"/>
+          <ellipse cx="46" cy="52" rx="6" ry="4" fill="#f9b8c0" opacity="0.6"/>
+          <ellipse cx="74" cy="52" rx="6" ry="4" fill="#f9b8c0" opacity="0.6"/>
+          <ellipse cx="60" cy="52" rx="4" ry="3" fill="#c0906a"/>
+          <path d="M54 57 Q60 63 66 57" stroke="#c0906a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p style="color: #999; font-size: 0.85rem; margin-bottom: 6px; font-family: Poppins, sans-serif;">You received a special message from</p>
+      <h2 style="color: #1a1a1a; font-size: 1.4rem; font-weight: 700; font-family: Poppins, sans-serif; margin-bottom: 4px;" id="display-sender-landing">Someone special 💌</h2>
+      <p style="color: #aaa; font-size: 0.8rem; margin-bottom: 28px; font-family: Poppins, sans-serif;">Earth-<span id="display-dimension">1610</span></p>
+      <button id="btn-open-portal" class="simple-btn btn-yes" style="font-size: 1rem; padding: 12px 40px;">
+        Open 💌
+      </button>
+    </div>
+    </div>
+    <!-- Active Card Invitation Phase -->
+    <div id="proposal-card-view" class="card-view-state hidden">
+      <div class="proposal-card simple-card" id="main-invite-card">
+        <!-- Cute mascot at the top -->
+        <div class="cute-mascot" id="cute-mascot-area">
+          <svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Body -->
+            <ellipse cx="60" cy="72" rx="28" ry="30" fill="#e8f4f8" />
+            <!-- Head -->
+            <circle cx="60" cy="44" r="26" fill="#f5e6d3" />
+            <!-- Ears -->
+            <circle cx="38" cy="24" r="10" fill="#f5e6d3" />
+            <circle cx="82" cy="24" r="10" fill="#f5e6d3" />
+            <circle cx="38" cy="24" r="6" fill="#f9b8c0" />
+            <circle cx="82" cy="24" r="6" fill="#f9b8c0" />
+            <!-- Eyes -->
+            <circle cx="52" cy="44" r="5" fill="#2c2c2c" />
+            <circle cx="68" cy="44" r="5" fill="#2c2c2c" />
+            <circle cx="54" cy="42" r="1.5" fill="#fff" />
+            <circle cx="70" cy="42" r="1.5" fill="#fff" />
+            <!-- Blush -->
+            <ellipse cx="46" cy="52" rx="6" ry="4" fill="#f9b8c0" opacity="0.6" />
+            <ellipse cx="74" cy="52" rx="6" ry="4" fill="#f9b8c0" opacity="0.6" />
+            <!-- Nose & mouth -->
+            <ellipse cx="60" cy="52" rx="4" ry="3" fill="#c0906a" />
+            <path d="M54 57 Q60 63 66 57" stroke="#c0906a" stroke-width="1.5" fill="none" stroke-linecap="round" />
+            <!-- Spider suit detail on body -->
+            <path d="M60 44 L60 100" stroke="#cc1a1a" stroke-width="1.5" opacity="0.3" />
+            <path d="M32 72 Q60 85 88 72" stroke="#cc1a1a" stroke-width="1.5" fill="none" opacity="0.2" />
+          </svg>
+        </div>
+        <div class="simple-card-body">
+          <p class="simple-sender"><span id="display-sender-name">Miles</span> is asking you...</p>
+          <h2 class="simple-question" id="display-message">Will you go to the movies with me?</h2>
+          <div class="simple-details">
+            <span class="simple-detail-item">🎬 <span id="display-movie-title">Spider-Man: Brand New Day</span></span>
+            <span class="simple-detail-item">📅 <span id="display-datetime">To Be Decided</span></span>
+            <span class="simple-detail-item">📍 <span id="display-location">Phnom Penh</span></span>
+          </div>
+        </div>
+        <!-- Buttons -->
+        <div class="simple-buttons" id="proposal-buttons-container">
+          <button id="btn-yes" class="simple-btn btn-yes decision-btn">
+            <span class="btn-text">Yes 🥰</span>
+          </button>
+          <button id="btn-no" class="simple-btn btn-no decision-btn">
+            <span class="btn-text">No</span>
+          </button>
+        </div>
+        <!-- hidden compat elements -->
+        <div class="card-badge hidden" id="theme-badge">Earth-1610</div>
+        <div class="web-corner hidden top-left"></div>
+        <div class="web-corner hidden top-right"></div>
+        <div class="web-corner hidden bottom-left"></div>
+        <div class="web-corner hidden bottom-right"></div>
+        <div class="card-header hidden">
+          <div class="spider-symbol-small"></div>
+          <h2 class="crush-greeting">Hey <span id="display-crush-name">Gwen</span>!</h2>
+        </div>
+        <div class="card-body hidden">
+          <div class="invitation-text-box"></div>
+          <div class="movie-details-badge"></div>
+        </div>
+        <div class="card-footer hidden"></div>
+      </div>
+    </div>
+    <!-- Receiver Choice Phase -->
+    <div id="receiver-choice-view" class="card-view-state hidden">
+      <div class="simple-card">
+        <div class="cute-mascot" style="margin-bottom: 16px;">
+          <svg viewBox="0 0 120 120" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="60" cy="72" rx="28" ry="30" fill="#e8f4f8"/>
+            <circle cx="60" cy="44" r="26" fill="#f5e6d3"/>
+            <circle cx="38" cy="24" r="10" fill="#f5e6d3"/><circle cx="82" cy="24" r="10" fill="#f5e6d3"/>
+            <circle cx="38" cy="24" r="6" fill="#f9b8c0"/><circle cx="82" cy="24" r="6" fill="#f9b8c0"/>
+            <circle cx="52" cy="44" r="5" fill="#2c2c2c"/><circle cx="68" cy="44" r="5" fill="#2c2c2c"/>
+            <circle cx="54" cy="42" r="1.5" fill="#fff"/><circle cx="70" cy="42" r="1.5" fill="#fff"/>
+            <ellipse cx="46" cy="52" rx="6" ry="4" fill="#f9b8c0" opacity="0.6"/>
+            <ellipse cx="74" cy="52" rx="6" ry="4" fill="#f9b8c0" opacity="0.6"/>
+            <path d="M54 57 Q60 65 66 57" stroke="#c0906a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2 style="font-size: 1.3rem; font-weight: 700; color: #1a1a1a; margin-bottom: 6px;">Yay! 🎉 You said yes!</h2>
+        <p style="color: #999; font-size: 0.85rem; margin-bottom: 24px;">Now pick a time & place 🍿</p>
+
+        <div style="width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+          <select id="receiver-location" style="width: 100%; background: #f5f5f5; border: 1px solid #ddd; color: #333; padding: 12px; border-radius: 10px; font-family: Poppins, sans-serif; font-size: 0.9rem;">
+            <option value="Legend Premium - Exchange Square">Legend Premium - Exchange Square</option>
+            <option value="Legend Cinema - Eden Garden">Legend Cinema - Eden Garden</option>
+            <option value="Legend Cinema - Olympia Mall">Legend Cinema - Olympia Mall</option>
+            <option value="Major Cineplex - Aeon Mall 1">Major Cineplex - Aeon Mall 1</option>
+            <option value="Major Cineplex - Aeon Mall Sen Sok">Major Cineplex - Aeon Mall Sen Sok</option>
+            <option value="Major Cineplex - Aeon Mall Mean Chey">Major Cineplex - Aeon Mall Mean Chey</option>
+            <option value="Prime Cineplex - Samai Square">Prime Cineplex - Samai Square</option>
+          </select>
+          <input type="date" id="receiver-date" style="width: 100%; background: #f5f5f5; border: 1px solid #ddd; color: #333; padding: 12px; border-radius: 10px; font-family: Poppins, sans-serif;" required>
+          <input type="time" id="receiver-time" style="width: 100%; background: #f5f5f5; border: 1px solid #ddd; color: #333; padding: 12px; border-radius: 10px; font-family: Poppins, sans-serif;" required>
+        </div>
+        <button id="btn-confirm-choice" class="simple-btn btn-yes" style="padding: 12px 40px; font-size: 1rem;">
+          Confirm! 🎬
+        </button>
+      </div>
+    </div>
+    <!-- Ticket Success Phase -->
+    <div id="proposal-success-view" class="success-view-state hidden">
+      <div class="simple-card" style="gap: 0; padding: 40px 30px;">
+        <!-- Happy mascot -->
+        <div style="margin-bottom: 16px; animation: bob 2.5s ease-in-out infinite;">
+          <svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="60" cy="72" rx="28" ry="30" fill="#c8f4d0"/>
+            <circle cx="60" cy="44" r="26" fill="#f5e6d3"/>
+            <circle cx="38" cy="24" r="10" fill="#f5e6d3"/><circle cx="82" cy="24" r="10" fill="#f5e6d3"/>
+            <circle cx="38" cy="24" r="6" fill="#f9b8c0"/><circle cx="82" cy="24" r="6" fill="#f9b8c0"/>
+            <!-- Happy eyes -->
+            <path d="M48 43 Q52 39 56 43" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M64 43 Q68 39 72 43" stroke="#2c2c2c" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="46" cy="52" rx="6" ry="4" fill="#f9b8c0" opacity="0.7"/>
+            <ellipse cx="74" cy="52" rx="6" ry="4" fill="#f9b8c0" opacity="0.7"/>
+            <path d="M52 57 Q60 66 68 57" stroke="#c0906a" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="60" cy="52" rx="4" ry="3" fill="#c0906a"/>
+          </svg>
+        </div>
+
+        <h2 style="font-size: 1.6rem; font-weight: 800; color: #1a1a1a; margin-bottom: 6px;">It's a date! 🎉</h2>
+        <p id="success-prompt-text" style="color: #888; font-size: 0.88rem; margin-bottom: 24px;">See you at the movies!</p>
+
+        <!-- Simple ticket card -->
+        <div style="background: #f9f9f9; border: 1.5px solid #eee; border-radius: 16px; padding: 20px 24px; width: 100%; max-width: 320px; text-align: left; margin-bottom: 24px;">
+          <p style="font-size: 0.7rem; color: #bbb; font-weight: 600; letter-spacing: 1px; margin-bottom: 4px;">🎬 MOVIE</p>
+          <p id="ticket-movie-title" style="font-size: 1rem; font-weight: 700; color: #1a1a1a; margin-bottom: 14px;">Spider-Man: Brand New Day</p>
+          <p style="font-size: 0.7rem; color: #bbb; font-weight: 600; letter-spacing: 1px; margin-bottom: 4px;">👥 WITH</p>
+          <p id="ticket-people" style="font-size: 0.9rem; font-weight: 600; color: #444; margin-bottom: 14px;">Gwen &amp; Miles</p>
+          <p style="font-size: 0.7rem; color: #bbb; font-weight: 600; letter-spacing: 1px; margin-bottom: 4px;">📅 WHEN</p>
+          <p id="ticket-datetime" style="font-size: 0.9rem; font-weight: 600; color: #444; margin-bottom: 14px;">—</p>
+          <p style="font-size: 0.7rem; color: #bbb; font-weight: 600; letter-spacing: 1px; margin-bottom: 4px;">📍 WHERE</p>
+          <p id="ticket-location" style="font-size: 0.9rem; font-weight: 600; color: #444;">—</p>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+          <button id="btn-add-calendar" class="simple-btn btn-yes" style="font-size: 0.85rem; padding: 10px 20px;">
+            📅 Add to Calendar
+          </button>
+          <button id="btn-screenshot" class="simple-btn" style="background: #eee; color: #555; font-size: 0.85rem; padding: 10px 20px;">
+            📤 Share
+          </button>
+        </div>
+
+        <!-- hidden compat -->
+        <span class="canon-stamp hidden">CANON EVENT LOCKED 🔒</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- 4. CANON EVENT SCREEN (Glitch Alert for NO Button)                 -->
+  <!-- ================================================================= -->
+  <div id="canon-event-overlay" class="canon-event-screen hidden">
+    <div class="canon-glitch-grid">
+      <div class="glitch-line"></div>
+      <div class="glitch-line"></div>
+      <div class="glitch-line"></div>
+    </div>
+
+    <div class="canon-warning-card glass-panel glow-border-red">
+      <div class="canon-warning-header">
+        <i class="fa-solid fa-triangle-exclamation warning-blink"></i>
+        <h2>CANON DISRUPTION ALERT</h2>
+        <i class="fa-solid fa-triangle-exclamation warning-blink"></i>
+      </div>
+      <div class="canon-warning-body">
+        <p class="alert-code">SYSTEM CODE: ERR_CANON_COLLAPSE_EARTH_<span id="canon-dimension-display">1610</span></p>
+
+        <div class="canon-visual-anomaly">
+          <div class="spider-hologram">
+            <svg viewBox="0 0 100 100" width="120" height="120">
+              <path class="scanning-web"
+                d="M50,10 L50,90 M10,50 L90,50 M20,20 L80,80 M20,80 L80,20 M50,15 L45,35 L35,30 L42,45 L30,48 L45,55 L25,65 L44,63 L30,85 L48,70 L50,88 L52,70 L70,85 L56,63 L75,65 L55,55 L70,48 L58,45 L65,30 L55,35 Z"
+                stroke="#ff1e27" stroke-width="2" fill="none" />
+            </svg>
+            <div class="scan-bar"></div>
+          </div>
+        </div>
+        <p class="canon-warning-text">
+          Refusing this Spider-Man movie date violates canon protocol. If you proceed, the timeline of Earth-<span
+            id="canon-dimension-display2">1610</span> will collapse.
+        </p>
+        <div class="canon-warning-footer">
+          <p class="timeline-status">TIMELINE STABILITY: 12% &darr;</p>
+          <button id="btn-fix-timeline" class="glow-btn neon-red pulse-fast">
+            <span><i class="fa-solid fa-wrench"></i> STABILIZE TIMELINE (Agree to Date)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- JavaScript Entry Point -->
+  <script src="script.js"></script>
+</body>
+
+</html>
